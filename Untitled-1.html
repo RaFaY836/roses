@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Rose Day Muznaa ❤️</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    background: radial-gradient(circle at top, #1a1a2e, #000);
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* ===== STARS ===== */
+.stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    z-index: -2;
+    background:
+        radial-gradient(1px 1px at 20% 30%, white, transparent),
+        radial-gradient(1px 1px at 40% 70%, white, transparent),
+        radial-gradient(1px 1px at 60% 20%, white, transparent),
+        radial-gradient(1px 1px at 80% 50%, white, transparent),
+        radial-gradient(1px 1px at 30% 80%, white, transparent),
+        radial-gradient(1px 1px at 70% 60%, white, transparent);
+    animation: twinkle 6s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+}
+
+/* ===== SHOOTING STAR ===== */
+.shooting-star {
+    position: fixed;
+    top: 20%;
+    left: -30%;
+    width: 140px;
+    height: 2px;
+    background: linear-gradient(90deg, white, transparent);
+    animation: shoot 3s ease-in-out forwards;
+    z-index: -1;
+}
+
+@keyframes shoot {
+    0% {
+        transform: translate(0,0) rotate(20deg);
+        opacity: 0;
+    }
+    10% { opacity: 1; }
+    100% {
+        transform: translate(160vw, 60vh) rotate(20deg);
+        opacity: 0;
+    }
+}
+
+/* ===== COMMON ===== */
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* ===== PAGE 1 ===== */
+h1 {
+    font-size: 2.6rem;
+    color: #ff4d6d;
+    text-shadow: 0 0 20px #ff4d6d;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ff4d6d; }
+    to { text-shadow: 0 0 30px #ff8fa3; }
+}
+
+.rose-btn {
+    margin-top: 30px;
+    padding: 15px 45px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(45deg, #ff4d6d, #ff758f);
+    color: white;
+    cursor: pointer;
+}
+
+/* ===== FIREWORK ROSES ===== */
+.rose {
+    position: fixed;
+    bottom: -30px;
+    font-size: 24px;
+    animation: firework 3.5s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes firework {
+    0% { transform: translate(0,0) scale(0.5); opacity: 1; }
+    100% { transform: translate(var(--x), var(--y)) scale(1.2); opacity: 0; }
+}
+
+/* ===== PAGE 2 ===== */
+.page2 { display: none; }
+
+.letter {
+    max-width: 520px;
+    background: rgba(255,255,255,0.06);
+    padding: 25px;
+    border-radius: 16px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 35px rgba(255,77,109,0.35);
+}
+
+.letter h2 { color: #ff8fa3; }
+
+#typeText {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #ffd6dd;
+    min-height: 170px;
+}
+
+/* ===== LOVE REVEAL ===== */
+#finalLove {
+    margin-top: 30px;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #ff4d6d;
+    opacity: 0;
+    transform: scale(0.6);
+}
+
+.show-love {
+    animation: loveReveal 2.5s forwards;
+}
+
+@keyframes loveReveal {
+    to {
+        opacity: 1;
+        transform: scale(1.1);
+        text-shadow: 0 0 50px #ff8fa3;
+    }
+}
+
+#proposal {
+    margin-top: 20px;
+    font-size: 1.6rem;
+    opacity: 0;
+}
+
+.show-proposal { animation: fadeIn 2s forwards; }
+
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ===== FALLING HEARTS ===== */
+.heart {
+    position: fixed;
+    top: -20px;
+    font-size: 22px;
+    animation: fall 6s linear forwards;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_6b8cddc8c7.mp3">
+</audio>
+
+<div class="page" id="page1">
+    <h1>🌹 Happy Rose Day 🌹</h1>
+    <button class="rose-btn" onclick="startLove()">Tap for Magic</button>
+</div>
+
+<div class="page page2" id="page2">
+    <div class="letter">
+        <h2>💌 Dear Muznaa</h2>
+        <div id="typeText"></div>
+        <div id="finalLove">I LOVE YOU, MUZNAA ❤️</div>
+        <div id="proposal">Will you be mine forever? 💍</div>
+    </div>
+</div>
+
+<script>
+const message =
+`Muznaa…
+Every rose reminds me of you.
+Under this starry night,
+my heart makes a wish —
+that you stay mine forever.`;
+
+let index = 0;
+
+function typeWriter() {
+    if (index < message.length) {
+        typeText.innerHTML += message.charAt(index++);
+        setTimeout(typeWriter, 45);
+    } else setTimeout(showLove, 1200);
+}
+
+function roseFirework(blasts=3, roses=150){
+    for(let b=0;b<blasts;b++){
+        setTimeout(()=>{
+            for(let i=0;i<roses;i++){
+                let r=document.createElement("div");
+                r.className="rose";
+                r.innerHTML="🌹";
+                r.style.left="50vw";
+                r.style.setProperty("--x",(Math.random()*520-260)+"px");
+                r.style.setProperty("--y",(Math.random()*-720-120)+"px");
+                document.body.appendChild(r);
+                setTimeout(()=>r.remove(),4000);
+            }
+        },b*650);
+    }
+}
+
+function shootingStar(){
+    let s=document.createElement("div");
+    s.className="shooting-star";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),3000);
+}
+
+function startLove(){
+    bgMusic.play();
+    roseFirework();
+    shootingStar();
+    setInterval(shootingStar, 9000);
+    setTimeout(()=>{
+        page1.style.display="none";
+        page2.style.display="flex";
+        typeWriter();
+    },2600);
+}
+
+function showLove(){
+    finalLove.classList.add("show-love");
+    setTimeout(()=>{
+        proposal.classList.add("show-proposal");
+        for(let i=0;i<3;i++){
+            setTimeout(()=>{
+                let h=document.createElement("div");
+                h.className="heart";
+                h.innerHTML="❤️";
+                h.style.left=Math.random()*80+"vw";
+                document.body.appendChild(h);
+                setTimeout(()=>h.remove(),6000);
+            },i*2000);
+        }
+    },1800);
+}
+</script>
+
+</body>
+</html>
